@@ -28,7 +28,7 @@ In order to run this program as a linux script, in ./app.js I added the first li
 This only worked after I also run the command `npm link` which allow me to call my program anywhere on my laptop.
 * In order to unlink, run `npm unlink todo`.
 
-## Automatic build on file change
+### Automatic build on file change
 I use nodemon and concurrently locally. They can also installed with globally (with -g).
 
 ### Other ways to run ts files
