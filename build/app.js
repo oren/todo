@@ -22,7 +22,22 @@ const convert = (dir) => {
 // if todo.txt exist, show the content
 const fs = require('node:fs');
 const readline = require('node:readline');
-function listTodo(file) {
+const command = () => {
+    var args = process.argv.slice(2);
+    if (args.length === 0) {
+        // calling without arguments - list all todos
+        listTodo("todo");
+    }
+    else if (args.length === 1) {
+        // calling with 1 arguments - show a single todo
+        showTodo("todo", args[0]);
+    }
+    else {
+        console.log("too many arguments");
+    }
+};
+// not working yet
+function showTodo(file, taskToShow) {
     var _a, e_1, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const exists = fs.existsSync(file);
@@ -55,6 +70,11 @@ function listTodo(file) {
                     delimiterFound = !delimiterFound;
                 }
                 if (line === "---") {
+                    console.log("show", taskToShow);
+                    console.log("num", taskNumber);
+                    if (taskNumber === taskToShow) {
+                        console.log("found it");
+                    }
                     delimiterFound = !delimiterFound;
                     continue;
                 }
@@ -69,5 +89,51 @@ function listTodo(file) {
         }
     });
 }
-// calling without arguments list all todos
-listTodo("todo");
+function listTodo(file) {
+    var _a, e_2, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        const exists = fs.existsSync(file);
+        if (!exists) {
+            console.log("todo.txt does not exists");
+            return;
+        }
+        const fileStream = fs.createReadStream(file);
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity,
+        });
+        // Note: we use the crlfDelay option to recognize all instances of CR LF
+        // ('\r\n') in input.txt as a single line break.
+        let delimiterFound = false;
+        let taskNumber = 0;
+        try {
+            // Each line in input.txt will be successively available here as `line`.
+            for (var _d = true, rl_2 = __asyncValues(rl), rl_2_1; rl_2_1 = yield rl_2.next(), _a = rl_2_1.done, !_a; _d = true) {
+                _c = rl_2_1.value;
+                _d = false;
+                const line = _c;
+                // if delimiter was found, read the first non empty line
+                if (delimiterFound) {
+                    if (line === "") {
+                        continue;
+                    }
+                    taskNumber += 1;
+                    console.log(`task ${taskNumber}: ${line}`);
+                    delimiterFound = !delimiterFound;
+                }
+                if (line === "---") {
+                    delimiterFound = !delimiterFound;
+                    continue;
+                }
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (!_d && !_a && (_b = rl_2.return)) yield _b.call(rl_2);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+    });
+}
+command();

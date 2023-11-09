@@ -18,9 +18,18 @@ After you run `npm start`, app.js will be created in the build folder.
 You can run the application with `./app.js` or `node app.js`.
 You can also run anywhere on your laptop with the command `todo` after you run `npm link`.
 
+You can create a file called todo and seperate each todo with ---.
+the first line after the delimiter that is not empty is the title of the todo item.
+Everything after that and until the next delimiter is the body of the todo item.
+
+### Commands
+`todo` - Show the titles of all your todos
+
+`todo 1` - Show todo number 1
+
 ## Backlog
 
-* [ ] list all todos
+* [x] list all todos
 * [ ] add todo
 
 ## Notes
