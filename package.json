@@ -1,0 +1,34 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "app.js",
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/app.js",
+    "start": "concurrently npm:start:*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oren/todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "site": "./build/app.js"
+  },
+  "bugs": {
+    "url": "https://github.com/oren/todo/issues"
+  },
+  "homepage": "https://github.com/oren/todo#readme",
+  "dependencies": {
+    "mustache": "^4.2.0",
+    "showdown": "^2.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.1"
+  }
+}
