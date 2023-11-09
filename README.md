@@ -1,4 +1,5 @@
-# Static site generator in TypeScript
+# TODO List
+A command line application that organizes the stuff I want to do.
 
 ## Setup
 ```
@@ -11,6 +12,11 @@ npm start
 * When I change app.ts, the typescript compiler generate build/app.js
 * The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
 * The template.html file is located in the 'build' folder
+
+## Backlog
+
+* [ ] list all todos
+* [ ] add todo
 
 ## Notes
 
@@ -27,11 +33,6 @@ I use nodemon and concurrently locally. They can also installed with globally (w
 
 ### Other ways to run ts files
 * `npx ts-node ~/scripts/site-generator.ts`. npx is a shortcut for npm exec, which runs scripts from packages, and ts-node is a wrapper for node that compiles and runs ts as a single step; it's essentially tsc and node in a single command
-
-## TODO
-
-* [ ] list all todos
-* [ ] add todo
 
 ## References
 
