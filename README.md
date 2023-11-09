@@ -15,7 +15,7 @@ npm start
 
 ## How to use it?
 After you run `npm start`, app.js will be created in the build folder.
-You can run the application with ./app.js or node app.js.
+You can run the application with `./app.js` or `node app.js`.
 You can also run anywhere on your laptop with the command `todo` after you run `npm link`.
 
 ## Backlog
