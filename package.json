@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "site": "./build/app.js"
+    "todo": "./build/app.js"
   },
   "bugs": {
     "url": "https://github.com/oren/todo/issues"
