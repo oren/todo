@@ -13,6 +13,11 @@ npm start
 * The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
 * The template.html file is located in the 'build' folder
 
+## How to use it?
+After you run `npm start`, app.js will be created in the build folder.
+You can run the application with ./app.js or node app.js.
+You can also run anywhere on your laptop with the command `todo` after you run `npm link`.
+
 ## Backlog
 
 * [ ] list all todos
