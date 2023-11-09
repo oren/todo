@@ -9,7 +9,7 @@ npm start
 
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
-* The command `npm link` allow me to run the program as a script from any location on my laptop with the command `site`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/site
+* The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
 * The template.html file is located in the 'build' folder
 
 ## Notes
@@ -18,9 +18,9 @@ npm start
 In order to run this program as a linux script, in ./app.js I added the first line: #!/usr/bin/env node.
 
 ### Nicer name for the script
-* In order to call the script with `site` instead of ./app.js I have an entry in package.json called bin.
+* In order to call the script with `todo` instead of ./app.js I have an entry in package.json called bin.
 This only worked after I also run the command `npm link` which allow me to call my program anywhere on my laptop.
-* In order to unlink, run `npm unlink website-ts`.
+* In order to unlink, run `npm unlink todo`.
 
 ## Automatic build on file change
 I use nodemon and concurrently locally. They can also installed with globally (with -g).
@@ -30,8 +30,8 @@ I use nodemon and concurrently locally. They can also installed with globally (w
 
 ## TODO
 
-* Find out if template.html can be in the src instead of build folder.
-* Currently the css file is external. Try to use a local file instead.
+* [ ] list all todos
+* [ ] add todo
 
 ## References
 
