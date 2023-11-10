@@ -1,8 +1,6 @@
 # TODO List
 A command line application that organizes the stuff I want to do.
 
-![todo demo video](todo-demo.mp4)
-
 ## Setup
 ```
 npm install -g typescript #TODO: verify if that's a good approach
