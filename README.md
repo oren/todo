@@ -23,6 +23,8 @@ the first line after the delimiter that is not empty is the title of the todo it
 Everything after that and until the next delimiter is the body of the todo item.
 
 ### Commands
+`todo help` - print help
+
 `todo` - print the titles of all your todos
 
 `todo 1` - print todo number 1
@@ -31,6 +33,8 @@ Everything after that and until the next delimiter is the body of the todo item.
 
 * [x] print all todos
 * [x] print a single todo
+* [x] show help
+* [ ] delete a single todo
 * [ ] add todo
 
 ## Notes

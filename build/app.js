@@ -28,12 +28,20 @@ const command = () => {
         printAll("todo");
     }
     else if (args.length === 1) {
-        // calling with 1 arguments - show a single todo
+        // "help" or print a single todo
+        if (args[0] === "help") {
+            console.log("todo <command>\n");
+            console.log("Usage:\n");
+            console.log("todo           print the titles of all your todos");
+            console.log("todo 1         print todo number 1");
+            console.log("todo help      print help");
+            return 0;
+        }
         // Number() will return NaN if it's not a number
         const taskNumber = Number(args[0]);
         if (!taskNumber) {
             console.log(`Task must be a number. You entered '${args[0]}'`);
-            return 1;
+            process.exit(1);
         }
         printOne("todo", taskNumber);
     }
