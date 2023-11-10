@@ -22,6 +22,8 @@ You can create a file called todo and seperate each todo with ---.
 the first line after the delimiter that is not empty is the title of the todo item.
 Everything after that and until the next delimiter is the body of the todo item.
 
+As an example file, take a look at `build/todo`.
+
 ### Commands
 `todo help` - print help
 
