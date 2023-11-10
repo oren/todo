@@ -27,16 +27,18 @@ As an example file, take a look at `build/todo`.
 ### Commands
 `todo help` - print help
 
-`todo` - print the titles of all your todos
+`todo` - print the titles of all todos
 
 `todo 1` - print todo number 1
+
+`todo delete 1` - delete todo number 1
 
 ## Backlog
 
 * [x] print all todos
 * [x] print a single todo
 * [x] show help
-* [ ] delete a single todo
+* [x] delete a single todo
 * [ ] add todo
 
 ## Notes

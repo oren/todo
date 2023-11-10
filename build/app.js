@@ -180,19 +180,39 @@ function findLinesToDelete(file, todoNumber) {
                 _c = rl_3_1.value;
                 _d = false;
                 const line = _c;
+                // first todo treated differently:
+                // i need to delete all the lines until and including the first ---
+                // the other todos - i need to delete the --- and all the lines until the nex ---
                 // if it's the todo number I am looking for and not ---, print the line
-                if (index === todoNumber) {
+                if (todoNumber === 1) {
                     if (line === "---") {
                         lines.push(lineNumber);
                         break;
                     }
                     lines.push(lineNumber);
+                    lineNumber += 1;
+                    continue;
+                }
+                // if i am here, it means todoNumber is > 1
+                // --- after the todo
+                if (line === "---" && index === todoNumber) {
+                    break;
+                }
+                // first --- before the todo
+                if (line === "---" && ((index + 1) === todoNumber)) {
+                    lines.push(lineNumber);
+                    lineNumber += 1;
+                    index += 1;
+                    continue;
                 }
                 if (line === "---") {
                     index += 1;
-                    if (index === todoNumber) {
-                        lines.push(lineNumber);
-                    }
+                    lineNumber += 1;
+                    continue;
+                }
+                // inside the todo
+                if (index === todoNumber) {
+                    lines.push(lineNumber);
                 }
                 lineNumber += 1;
             }
