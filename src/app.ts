@@ -13,9 +13,11 @@ const command = () {
 	if(args.length === 0) {
 		// calling without arguments - list all todos
 		printAll("todo");
+		return 0
 	}
-	else if (args.length === 1) {
-		// "help" or print a single todo
+
+	// print help or print a single todo
+	if (args.length === 1) {
 		if(args[0] === "help") {
 			console.log("todo <command>\n")
 			console.log("Usage:\n")
@@ -26,22 +28,64 @@ const command = () {
 			return 0
 		}
 
+		// print a single todo
 		// Number() will return NaN if it's not a number
-		const taskNumber = Number(args[0])
-		if(!taskNumber) {
-			console.log(`Task must be a number. You entered '${args[0]}'`)
+		const todoNumber = Number(args[0])
+		if(!todoNumber) {
+			console.log(`Todo must be a number. You entered '${args[0]}'`)
 			process.exit(1)
 		}
 
-		printOne("todo", taskNumber)
+		printOne("todo", todoNumber)
+		return 0
 	}
-	else {
+
+	// delete a single todo
+	if (args.length === 2) {
+		if(args[0] === "delete") {
+			const todoNumber = Number(args[1])
+			if(!todoNumber) {
+				console.log(`Todo must be a number. You entered '${args[1]}'`)
+				process.exit(1)
+			}
+
+			deleteOne("todo", todoNumber)
+		}
+	}
+
+	if (args.length > 2) {
 		console.log("too many arguments")
 	}
 }
 
+// delete a single todo. not working yet
+async function deleteOne(file: string, todoNumber: number) {
+	const exists = fs.existsSync(file)
+
+	if (!exists) {
+		console.log("todo.txt does not exists")
+		return
+	}
+
+  const fileStream = fs.createReadStream(file);
+
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity,
+  });
+  // Note: we use the crlfDelay option to recognize all instances of CR LF
+  // ('\r\n') in input.txt as a single line break.
+
+	// Each line in input.txt will be successively available here as `line`.
+  for await (const line of rl) {
+
+		console.log(line)
+		// if it's the todo number I am looking for and not ---, print the line
+  }
+}
+
 // return a single todo
-async function printOne(file: string, taskNumber: number) {
+async function printOne(file: string, todoNumber: number) {
 	const exists = fs.existsSync(file)
 
 	if (!exists) {
@@ -63,8 +107,8 @@ async function printOne(file: string, taskNumber: number) {
 	// Each line in input.txt will be successively available here as `line`.
   for await (const line of rl) {
 
-		// if it's the task number I am looking for and not ---, print the line
-		if(index === taskNumber) {
+		// if it's the todo number I am looking for and not ---, print the line
+		if(index === todoNumber) {
 			if (line === "---") {
 				break
 			}
@@ -111,7 +155,7 @@ async function printAll(file: string) {
 		}
 
 		if(line !== "" && okToPrint) {
-			console.log(`task ${index}: ${line}`);
+			console.log(`Todo ${index}: ${line}`);
 			okToPrint = false
 		}
   }
