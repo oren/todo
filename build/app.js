@@ -33,9 +33,10 @@ const command = () => {
         if (args[0] === "help") {
             console.log("todo <command>\n");
             console.log("Usage:\n");
-            console.log("todo           print the titles of all your todos");
-            console.log("todo 1         print todo number 1");
-            console.log("todo help      print help");
+            console.log("todo             print the titles of all your todos");
+            console.log("todo 1           print todo number 1");
+            console.log("todo 1 delete    delete todo number 1");
+            console.log("todo help        print help");
             return 0;
         }
         // print a single todo
@@ -50,8 +51,8 @@ const command = () => {
     }
     // delete a single todo
     if (args.length === 2) {
-        if (args[0] === "delete") {
-            const todoNumber = Number(args[1]);
+        if (args[1] === "delete") {
+            const todoNumber = Number(args[0]);
             if (!todoNumber) {
                 console.log(`Todo must be a number. You entered '${args[1]}'`);
                 process.exit(1);
@@ -230,7 +231,6 @@ function findLinesToDelete(file, todoNumber) {
 function deleteOne(fileName, todoNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         const linesToDelete = yield findLinesToDelete(fileName, todoNumber);
-        console.log(linesToDelete);
         const removeLines = (data, lines = []) => {
             return data
                 .split('\n')
