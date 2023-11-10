@@ -19,25 +19,30 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
 const convert = (dir) => {
     console.log('here');
 };
-// if todo.txt exist, show the content
 const fs = require('node:fs');
 const readline = require('node:readline');
 const command = () => {
     var args = process.argv.slice(2);
     if (args.length === 0) {
         // calling without arguments - list all todos
-        listTodo("todo");
+        printAll("todo");
     }
     else if (args.length === 1) {
         // calling with 1 arguments - show a single todo
-        showTodo("todo", args[0]);
+        // Number() will return NaN if it's not a number
+        const taskNumber = Number(args[0]);
+        if (!taskNumber) {
+            console.log(`Task must be a number. You entered '${args[0]}'`);
+            return 1;
+        }
+        printOne("todo", taskNumber);
     }
     else {
         console.log("too many arguments");
     }
 };
-// not working yet
-function showTodo(file, taskToShow) {
+// return a single todo
+function printOne(file, taskNumber) {
     var _a, e_1, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const exists = fs.existsSync(file);
@@ -52,31 +57,22 @@ function showTodo(file, taskToShow) {
         });
         // Note: we use the crlfDelay option to recognize all instances of CR LF
         // ('\r\n') in input.txt as a single line break.
-        let delimiterFound = false;
-        let taskNumber = 0;
+        let index = 1;
         try {
             // Each line in input.txt will be successively available here as `line`.
             for (var _d = true, rl_1 = __asyncValues(rl), rl_1_1; rl_1_1 = yield rl_1.next(), _a = rl_1_1.done, !_a; _d = true) {
                 _c = rl_1_1.value;
                 _d = false;
                 const line = _c;
-                // if delimiter was found, read the first non empty line
-                if (delimiterFound) {
-                    if (line === "") {
-                        continue;
+                // if it's the task number I am looking for and not ---, print the line
+                if (index === taskNumber) {
+                    if (line === "---") {
+                        break;
                     }
-                    taskNumber += 1;
-                    console.log(`task ${taskNumber}: ${line}`);
-                    delimiterFound = !delimiterFound;
+                    console.log(line);
                 }
                 if (line === "---") {
-                    console.log("show", taskToShow);
-                    console.log("num", taskNumber);
-                    if (taskNumber === taskToShow) {
-                        console.log("found it");
-                    }
-                    delimiterFound = !delimiterFound;
-                    continue;
+                    index += 1;
                 }
             }
         }
@@ -89,7 +85,8 @@ function showTodo(file, taskToShow) {
         }
     });
 }
-function listTodo(file) {
+// if todo.txt exist, show the  titles of all the todos
+function printAll(file) {
     var _a, e_2, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const exists = fs.existsSync(file);
@@ -104,26 +101,24 @@ function listTodo(file) {
         });
         // Note: we use the crlfDelay option to recognize all instances of CR LF
         // ('\r\n') in input.txt as a single line break.
-        let delimiterFound = false;
-        let taskNumber = 0;
+        let okToPrint = true;
+        let index = 1;
         try {
             // Each line in input.txt will be successively available here as `line`.
             for (var _d = true, rl_2 = __asyncValues(rl), rl_2_1; rl_2_1 = yield rl_2.next(), _a = rl_2_1.done, !_a; _d = true) {
                 _c = rl_2_1.value;
                 _d = false;
                 const line = _c;
-                // if delimiter was found, read the first non empty line
-                if (delimiterFound) {
-                    if (line === "") {
-                        continue;
-                    }
-                    taskNumber += 1;
-                    console.log(`task ${taskNumber}: ${line}`);
-                    delimiterFound = !delimiterFound;
-                }
+                // if --- -> increment index, okToPrint and continue
+                // if text and ok to print -> print, not okToPrint
                 if (line === "---") {
-                    delimiterFound = !delimiterFound;
+                    index += 1;
+                    okToPrint = true;
                     continue;
+                }
+                if (line !== "" && okToPrint) {
+                    console.log(`task ${index}: ${line}`);
+                    okToPrint = false;
                 }
             }
         }
