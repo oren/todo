@@ -23,13 +23,14 @@ the first line after the delimiter that is not empty is the title of the todo it
 Everything after that and until the next delimiter is the body of the todo item.
 
 ### Commands
-`todo` - Show the titles of all your todos
+`todo` - print the titles of all your todos
 
-`todo 1` - Show todo number 1
+`todo 1` - print todo number 1
 
 ## Backlog
 
-* [x] list all todos
+* [x] print all todos
+* [x] print a single todo
 * [ ] add todo
 
 ## Notes

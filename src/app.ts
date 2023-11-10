@@ -4,8 +4,6 @@ const convert = (dir: string) => {
 	console.log('here')
 }
 
-// if todo.txt exist, show the content
-
 const fs = require('node:fs');
 const readline = require('node:readline');
 
@@ -14,19 +12,27 @@ const command = () {
 
 	if(args.length === 0) {
 		// calling without arguments - list all todos
-		listTodo("todo");
+		printAll("todo");
 	}
 	else if (args.length === 1) {
 		// calling with 1 arguments - show a single todo
-		showTodo("todo", args[0])
+
+		// Number() will return NaN if it's not a number
+		const taskNumber = Number(args[0])
+		if(!taskNumber) {
+			console.log(`Task must be a number. You entered '${args[0]}'`)
+			return 1
+		}
+
+		printOne("todo", taskNumber)
 	}
 	else {
 		console.log("too many arguments")
 	}
 }
 
-// not working yet
-async function showTodo(file: string, taskToShow: int) {
+// return a single todo
+async function printOne(file: string, taskNumber: number) {
 	const exists = fs.existsSync(file)
 
 	if (!exists) {
@@ -43,39 +49,27 @@ async function showTodo(file: string, taskToShow: int) {
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
 
-	let delimiterFound = false
-	let taskNumber = 0
+	let index = 1
 
 	// Each line in input.txt will be successively available here as `line`.
   for await (const line of rl) {
 
-		// if delimiter was found, read the first non empty line
-		if(delimiterFound) {
-			if(line === "") {
-				continue
+		// if it's the task number I am looking for and not ---, print the line
+		if(index === taskNumber) {
+			if (line === "---") {
+				break
 			}
-
-			taskNumber += 1
-
-			console.log(`task ${taskNumber}: ${line}`);
-
-			delimiterFound = !delimiterFound
+			console.log(line)
 		}
 
-		if(line === "---") {
-			console.log("show", taskToShow)
-			console.log("num", taskNumber)
-
-			if(taskNumber === taskToShow) {
-				console.log("found it");
-			}
-			delimiterFound = !delimiterFound
-			continue
+		if (line === "---") {
+			index += 1
 		}
   }
 }
 
-async function listTodo(file: string) {
+// if todo.txt exist, show the  titles of all the todos
+async function printAll(file: string) {
 	const exists = fs.existsSync(file)
 
 	if (!exists) {
@@ -92,26 +86,24 @@ async function listTodo(file: string) {
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
 
-	let delimiterFound = false
-	let taskNumber = 0
+	let okToPrint = true
+	let index = 1
 
 	// Each line in input.txt will be successively available here as `line`.
   for await (const line of rl) {
 
-		// if delimiter was found, read the first non empty line
-		if(delimiterFound) {
-			if(line === "") {
-				continue
-			}
-
-			taskNumber += 1
-			console.log(`task ${taskNumber}: ${line}`);
-			delimiterFound = !delimiterFound
-		}
+		// if --- -> increment index, okToPrint and continue
+		// if text and ok to print -> print, not okToPrint
 
 		if(line === "---") {
-			delimiterFound = !delimiterFound
+			index +=1
+			okToPrint = true
 			continue
+		}
+
+		if(line !== "" && okToPrint) {
+			console.log(`task ${index}: ${line}`);
+			okToPrint = false
 		}
   }
 }
