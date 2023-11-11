@@ -96,6 +96,8 @@ Small improvements:
 * move functions to files
 * use constant instead of '---'
 * allow flexible location and name for the todo file (config file or env variable)
+* use correct exit codes
+* embed demo video to readme
 
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
