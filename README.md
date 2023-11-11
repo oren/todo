@@ -92,6 +92,11 @@ As an example file, take a look at `build/todo`.
 * [ ] add todo
 * [ ] change priority of a todo
 
+Small improvements:
+* move functions to files
+* use constant instead of '---'
+* allow flexible location and name for the todo file (config file or env variable)
+
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
 * The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
