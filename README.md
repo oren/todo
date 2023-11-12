@@ -1,7 +1,7 @@
 # TODO List
 A command line application that organizes the stuff I want to do.
 
-todo.mp4
+https://github.com/oren/todo/assets/6517/8126f7c3-a67e-4229-815a-427927e66c75
 
 ## Why I am building this?
 I currently use a giant text file to organize the stuff I want to do. My items are separated by `---`. Very often I have a title and below it a few lines that gives me more context or addition thinsg I need to do as part of this todo.
