@@ -80,6 +80,13 @@ As an example file, take a look at `build/todo`.
 
 `todo 1 delete` - delete todo number 1
 
+I am thinking of the following commands:
+
+`todo add "buy milk"`
+
+`todo 1 edit`
+
+`todo 5 change-priority 2`
 
 ## Notes for development
 
@@ -90,6 +97,7 @@ As an example file, take a look at `build/todo`.
 * [x] show help
 * [x] delete a single todo
 * [ ] add todo
+* [ ] edit todo
 * [ ] change priority of a todo
 
 Small improvements:
