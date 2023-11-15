@@ -16,16 +16,20 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
+console.log(process.env.TODO_FILE);
+if (!process.env.TODO_FILE) {
+    process.env.TODO_FILE = 'todo';
+}
 const convert = (dir) => {
     console.log('here');
 };
 const fs = require('node:fs');
 const readline = require('node:readline');
-const command = () => {
+const command = (fileName) => {
     var args = process.argv.slice(2);
     if (args.length === 0) {
         // calling without arguments - list all todos
-        printAll("todo");
+        printAll(fileName);
         return 0;
     }
     // print help or print a single todo
@@ -33,10 +37,11 @@ const command = () => {
         if (args[0] === "help") {
             console.log("todo <command>\n");
             console.log("Usage:\n");
-            console.log("todo             print the titles of all your todos");
-            console.log("todo 1           print todo number 1");
-            console.log("todo 1 delete    delete todo number 1");
-            console.log("todo help        print help");
+            console.log("todo                           print the titles of all your todos");
+            console.log("todo 1                         print todo number 1");
+            console.log("todo 1 delete                  delete todo number 1");
+            console.log("TODO_FILE=/misc/notes todo     use different file name");
+            console.log("todo help                      print help");
             return 0;
         }
         // print a single todo
@@ -46,7 +51,7 @@ const command = () => {
             console.log(`Todo must be a number. You entered '${args[0]}'`);
             process.exit(1);
         }
-        printOne("todo", todoNumber);
+        printOne(fileName, todoNumber);
         return 0;
     }
     // delete a single todo
@@ -57,7 +62,7 @@ const command = () => {
                 console.log(`Todo must be a number. You entered '${args[1]}'`);
                 process.exit(1);
             }
-            deleteOne("todo", todoNumber);
+            deleteOne(fileName, todoNumber);
         }
     }
     if (args.length > 2) {
@@ -65,15 +70,15 @@ const command = () => {
     }
 };
 // return a single todo
-function printOne(file, todoNumber) {
+function printOne(fileName, todoNumber) {
     var _a, e_1, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const exists = fs.existsSync(file);
         if (!exists) {
-            console.log("todo.txt does not exists");
+            console.log(`${fileName} does not exists`);
             return;
         }
-        const fileStream = fs.createReadStream(file);
+        const fileStream = fs.createReadStream(fileName);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
@@ -109,15 +114,15 @@ function printOne(file, todoNumber) {
     });
 }
 // if todo.txt exist, show the  titles of all the todos
-function printAll(file) {
+function printAll(fileName) {
     var _a, e_2, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
-        const exists = fs.existsSync(file);
+        const exists = fs.existsSync(fileName);
         if (!exists) {
-            console.log("todo.txt does not exists");
+            console.log(`${fileName} does not exists`);
             return;
         }
-        const fileStream = fs.createReadStream(file);
+        const fileStream = fs.createReadStream(fileName);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
@@ -157,15 +162,15 @@ function printAll(file) {
 // find lines to delete
 // delete them
 // return lines to delete
-function findLinesToDelete(file, todoNumber) {
+function findLinesToDelete(fileName, todoNumber) {
     var _a, e_3, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const exists = fs.existsSync(file);
         if (!exists) {
-            console.log("todo.txt does not exists");
+            console.log(`${fileName} does not exists`);
             return;
         }
-        const fileStream = fs.createReadStream(file);
+        const fileStream = fs.createReadStream(fileName);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
@@ -249,4 +254,4 @@ function deleteOne(fileName, todoNumber) {
         });
     });
 }
-command();
+command(process.env.TODO_FILE);
