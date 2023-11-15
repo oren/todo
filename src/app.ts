@@ -1,13 +1,7 @@
 #!/usr/bin/env node
 
-console.log(process.env.TODO_FILE)
-
 if (!process.env.TODO_FILE) {
 	process.env.TODO_FILE = 'todo'
-}
-
-const convert = (dir: string) => {
-	console.log('here')
 }
 
 const fs = require('node:fs');
@@ -68,7 +62,7 @@ const command = (fileName: string) {
 
 // return a single todo
 async function printOne(fileName: string, todoNumber: number) {
-	const exists = fs.existsSync(file)
+	const exists = fs.existsSync(fileName)
 
 	if (!exists) {
 		console.log(`${fileName} does not exists`)
