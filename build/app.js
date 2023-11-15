@@ -16,13 +16,9 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
-console.log(process.env.TODO_FILE);
 if (!process.env.TODO_FILE) {
     process.env.TODO_FILE = 'todo';
 }
-const convert = (dir) => {
-    console.log('here');
-};
 const fs = require('node:fs');
 const readline = require('node:readline');
 const command = (fileName) => {
@@ -73,7 +69,7 @@ const command = (fileName) => {
 function printOne(fileName, todoNumber) {
     var _a, e_1, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
-        const exists = fs.existsSync(file);
+        const exists = fs.existsSync(fileName);
         if (!exists) {
             console.log(`${fileName} does not exists`);
             return;
