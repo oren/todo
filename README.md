@@ -19,11 +19,11 @@ todo <command>
 
 Usage:
 
-todo														print the titles of all your todos
+todo                            print the titles of all your todos
 todo 1													print todo number 1
-todo 1 delete										delete todo number 1
-TODO_FILE=/misc/notes todo			use different file name
-todo help												print help
+todo 1 delete                   delete todo number 1
+TODO_FILE=/misc/notes todo      use different file name
+todo help                       print help
 ```
 
 ```
