@@ -22,7 +22,7 @@ Usage:
 todo                            print the titles of all your todos
 todo 1													print todo number 1
 todo 1 delete                   delete todo number 1
-TODO_FILE=/misc/notes todo      use different file name
+TODO_FILE=/misc/notes todo      use different file name and location
 todo help                       print help
 ```
 
@@ -101,7 +101,7 @@ I am thinking of the following commands:
 * [x] print a single todo
 * [x] show help
 * [x] delete a single todo
-* [x] allow different name for todo file
+* [x] file name and path is configurable
 * [ ] add todo
 * [ ] edit todo
 * [ ] change priority of a todo
