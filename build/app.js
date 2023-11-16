@@ -161,7 +161,7 @@ function printAll(fileName) {
 function findLinesToDelete(fileName, todoNumber) {
     var _a, e_3, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
-        const exists = fs.existsSync(file);
+        const exists = fs.existsSync(fileName);
         if (!exists) {
             console.log(`${fileName} does not exists`);
             return;

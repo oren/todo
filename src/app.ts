@@ -142,7 +142,7 @@ async function printAll(fileName: string) {
 
 // return lines to delete
 async function findLinesToDelete(fileName: string, todoNumber: number) {
-	const exists = fs.existsSync(file)
+	const exists = fs.existsSync(fileName)
 
 	if (!exists) {
 		console.log(`${fileName} does not exists`)
