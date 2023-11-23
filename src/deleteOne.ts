@@ -19,30 +19,30 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
 
-	let index = 1
-	let lineNumber = 0
-	let lines = []
-	let content = ""
+	let index = 1            // what todo I am currently at
+	let lineNumber = 0       // what line number I am curently at
+	let lines = []           // returned value: lines to delete 
+	let content = []         // returned value: content of todo to delete
 
 
 	// Each line in input.txt will be successively available here as `line`.
   for await (const line of rl) {
 
 		// first todo treated differently:
-		// i need to delete all the lines until and including the first ---
-		// the other todos - i need to delete the --- and all the lines until the nex ---
+		// delete all the lines until and including the first ---
+		// the other todos: delete the --- and all the lines until the next ---
 
 		// if it's the todo number I am looking for
 		if(todoNumber === 1) {
+			lines.push(lineNumber)
+			lineNumber += 1
+
 			if (line === "---") {
-				lines.push(lineNumber)
 				break
 			}
 
-			lines.push(lineNumber)
-			// content += line + '\n'
-			content = content + "---"
-			lineNumber += 1
+			content.push(line)
+
 			continue
 		}
 
@@ -50,8 +50,6 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 
 		// --- after the todo
 		if (line === "---" && index === todoNumber) {
-			// content += line + '\n'
-			content = content + "---"
 			break
 		}
 
@@ -72,7 +70,7 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 		// inside the todo
 		if (index === todoNumber) {
 			lines.push(lineNumber)
-			content += line + '\n'
+			content.push(line)
 		}
 
 		lineNumber += 1
@@ -85,6 +83,12 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 // delete them
 export default async function deleteOne(fileName: string, todoNumber: number) {
 	const [linesToDelete, content] = await findLinesToDelete(fileName, todoNumber)
+
+	console.log('***')
+	console.log('inside deleteOne')
+	console.log('linesToDelete', linesToDelete)
+	console.log('content to delete', content)
+	console.log('***')
 
 	const removeLines = (data, lines = []) => {
 			return data
@@ -103,8 +107,8 @@ export default async function deleteOne(fileName: string, todoNumber: number) {
 				if(!content) {
 					console.log(`Task ${todoNumber} was deleted`)
 				}
+				return [content, linesToDelete.length - 1]
 		});
 	})
 
-	return [content, linesToDelete.length - 1]
 }
