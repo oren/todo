@@ -84,12 +84,6 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 export default async function deleteOne(fileName: string, todoNumber: number) {
 	const [linesToDelete, content] = await findLinesToDelete(fileName, todoNumber)
 
-	console.log('***')
-	console.log('inside deleteOne')
-	console.log('linesToDelete', linesToDelete)
-	console.log('content to delete', content)
-	console.log('***')
-
 	const removeLines = (data, lines = []) => {
 			return data
 					.split('\n')
@@ -103,12 +97,7 @@ export default async function deleteOne(fileName: string, todoNumber: number) {
 		// remove the first line and the 5th and 6th lines in the file
 		fs.writeFile(fileName, removeLines(data, linesToDelete), 'utf8', function(err) {
 			if (err) throw err
-
-				if(!content) {
-					console.log(`Task ${todoNumber} was deleted`)
-				}
-				return [content, linesToDelete.length - 1]
+			return [linesToDelete.length - 1, content]
 		});
 	})
-
 }

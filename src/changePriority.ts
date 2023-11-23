@@ -74,24 +74,15 @@ import deleteOne from "./deleteOne.js";
 // 	});
 // }
 
-// not working. deleteOne is not complete when reading the file (line 81)
+// remove a todo and insert to a different location in the file. todo = target, priority = destination
+// not working. TypeError: (intermediate value) is not iterable
 export default async function changePriority(fileName: string, todo: number, priority: number) {
-	// cut todo
-	// paste to a different location (priority)
-	const [content, numOfLines] = await deleteOne(fileName, todo)
+	const [numOfLines, content] = await deleteOne(fileName, todo)
 
-	console.log('---')
-	console.log('inside changePriority')
-
-	var todos = fs.readFileSync(fileName).toString().split("\n");
-	console.log('todos before splice:', todos)
-  todos.splice(0, 0, content);
-	console.log('todos after splice:', todos)
-	console.log('---')
-
-	var text = todos.join("\n");
-
-	fs.writeFile(fileName, text, function (err) {
-		if (err) return console.log(err);
-	});
+	// var todos = fs.readFileSync(fileName).toString().split("\n");
+  // todos.splice(0, 0, content);
+	// var text = todos.join("\n");
+	// fs.writeFile(fileName, text, function (err) {
+		// if (err) return console.log(err);
+	// });
 }

@@ -57,6 +57,7 @@ const command = (fileName: string) {
 			}
 
 			deleteOne(fileName, todoNumber)
+			console.log(`Task ${todoNumber} was deleted`) // how to call this AFTER deleteOne is completed?
 			return 0
 		}
 
