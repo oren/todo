@@ -79,10 +79,15 @@ import deleteOne from "./deleteOne.js";
 export default async function changePriority(fileName: string, todo: number, priority: number) {
 	const [numOfLines, content] = await deleteOne(fileName, todo)
 
-	// var todos = fs.readFileSync(fileName).toString().split("\n");
-  // todos.splice(0, 0, content);
-	// var text = todos.join("\n");
-	// fs.writeFile(fileName, text, function (err) {
-		// if (err) return console.log(err);
-	// });
+	console.log("lines", numOfLines)
+	console.log("content", content)
+
+	var todos = fs.readFileSync(fileName).toString().split("\n");
+
+	console.log("todos", todos)
+	todos.splice(0, 0, ...content, '---');
+	console.log("todos", todos)
+
+	var text = todos.join("\n");
+	fs.writeFileSync(fileName, text, 'utf8')
 }

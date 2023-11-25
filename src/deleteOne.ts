@@ -21,7 +21,7 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 
 	let index = 1            // what todo I am currently at
 	let lineNumber = 0       // what line number I am curently at
-	let lines = []           // returned value: lines to delete 
+	let lines = []           // returned value: lines to delete
 	let content = []         // returned value: content of todo to delete
 
 
@@ -79,9 +79,9 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 	return [lines, content]
 }
 
-// find lines to delete
-// delete them
-export default async function deleteOne(fileName: string, todoNumber: number) {
+// find the lines that needs to be deleted and delete them
+// linesToDelete and content are only needed by changePriority function
+export default async function deleteOne(fileName: string, todoNumber: number): Promise<any> {
 	const [linesToDelete, content] = await findLinesToDelete(fileName, todoNumber)
 
 	const removeLines = (data, lines = []) => {
@@ -91,13 +91,10 @@ export default async function deleteOne(fileName: string, todoNumber: number) {
 					.join('\n');
 	}
 
-	fs.readFile(fileName, 'utf8', (err, data) => {
-		if (err) throw err
+	const data = fs.readFileSync(fileName, 'utf-8');
 
-		// remove the first line and the 5th and 6th lines in the file
-		fs.writeFile(fileName, removeLines(data, linesToDelete), 'utf8', function(err) {
-			if (err) throw err
-			return [linesToDelete.length - 1, content]
-		});
-	})
+	// remove the first line and the 5th and 6th lines in the file
+	fs.writeFileSync(fileName, removeLines(data, linesToDelete), 'utf8')
+
+	return [linesToDelete.length - 1, content]
 }
