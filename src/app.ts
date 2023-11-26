@@ -4,6 +4,7 @@ import printAll from "./printAll.js";
 import printOne from "./printOne.js";
 import deleteOne from "./deleteOne.js";
 import changePriority from "./changePriority.js";
+import add from "./add.js";
 
 if (!process.env.TODO_FILE) {
 	process.env.TODO_FILE = 'todo'
@@ -50,6 +51,12 @@ const command = (fileName: string) {
 
 	// delete a single todo
 	if (args.length === 2) {
+		if(args[0] === "add") {
+			// TODO: validate the title of the todo
+			add(fileName, args[1])
+			return 0
+		}
+
 		if(args[1] === "delete") {
 			const todoNumber = Number(args[0])
 			if(!todoNumber) {
