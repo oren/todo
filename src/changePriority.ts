@@ -80,7 +80,6 @@ export default async function changePriority(fileName: string, todo: number, pri
 	let destinationTodo = 0
 	let todoCount = 1
 
-
 	var todos = fs.readFileSync(fileName).toString().split("\n");
 
 	if (priority > 1) {

@@ -16,15 +16,17 @@ export default function add(fileName: stringt): Void {
     });
 
     child.on('exit', function (e, code) {
-        // add to todos
+        // file was saves. add content to todos
 
         var todo = fs.readFileSync("/tmp/todo.txt").toString().split("\n");
 
         if(todo[todo.length-1] === '') {
             todo.pop()
-        
+        }
 
-        addWithTitle(fileName, todo)
+        var text = todo.join("\n");
+
+        addWithTitle(fileName, text)
     });
 
 }
