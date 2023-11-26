@@ -104,16 +104,13 @@ I am thinking of the following commands:
 * [x] show help
 * [x] delete a single todo
 * [x] file name and path is configurable
+* [x] change priority of a todo
 * [ ] add todo
 * [ ] edit todo
-* [ ] change priority of a todo
 
 Small improvements:
-* move functions to files
 * use constant instead of '---'
-* allow flexible location and name for the todo file (config file or env variable)
 * use correct exit codes
-* embed demo video to readme
 
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
