@@ -81,6 +81,8 @@ As an example file, take a look at `build/todo`.
 
 `todo add "buy milk"` - add a todo 
 
+`todo add` - add a todo with a text editor
+
 `todo` - print the titles of all todos
 
 `todo 1` - print todo number 1
@@ -92,8 +94,6 @@ As an example file, take a look at `build/todo`.
 `TODO_FILE=/misc/notes todo` - change the location of your todo file using an environment variable
 
 I am thinking of the following commands:
-
-`todo add`
 
 `todo 1 edit`
 
@@ -110,10 +110,11 @@ I am thinking of the following commands:
 * [x] file name and path is configurable
 * [x] change priority of a todo
 * [x] add todo and title
-* [ ] add todo (open text editor)
+* [x] add todo (open text editor)
 * [ ] edit todo
 
 Small improvements:
+* update demo video
 * use constant instead of '---'
 * use correct exit codes
 
