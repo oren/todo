@@ -75,7 +75,6 @@ import deleteOne from "./deleteOne.js";
 // }
 
 // remove a todo and insert to a different location in the file. todo = target, priority = destination
-// not working. TypeError: (intermediate value) is not iterable
 export default async function changePriority(fileName: string, todo: number, priority: number) {
 	const [numOfLines, content] = await deleteOne(fileName, todo)
 	let destinationTodo = 0
