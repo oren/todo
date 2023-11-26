@@ -6,6 +6,7 @@ import deleteOne from "./deleteOne.js";
 import changePriority from "./changePriority.js";
 import add from "./add.js";
 import addWithTitle from "./add_with_title.js";
+import edit from "./edit.js";
 
 if (!process.env.TODO_FILE) {
 	process.env.TODO_FILE = 'todo'
@@ -58,7 +59,7 @@ const command = (fileName: string) {
 		return 0
 	}
 
-	// delete a single todo
+	// add, delete, or edit
 	if (args.length === 2) {
 		if(args[0] === "add") {
 			// TODO: validate the title of the todo
@@ -75,6 +76,18 @@ const command = (fileName: string) {
 
 			deleteOne(fileName, todoNumber)
 			console.log(`Task ${todoNumber} was deleted`) // how to call this AFTER deleteOne is completed?
+			return 0
+		}
+
+		if(args[1] === "edit") {
+			const todoNumber = Number(args[0])
+			if(!todoNumber) {
+				console.log(`Todo must be a number. You entered '${args[1]}'`)
+				process.exit(1)
+			}
+
+			edit(fileName, todoNumber)
+			console.log(`Task ${todoNumber} was edited`)
 			return 0
 		}
 
