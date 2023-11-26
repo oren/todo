@@ -5,6 +5,7 @@ import printOne from "./printOne.js";
 import deleteOne from "./deleteOne.js";
 import changePriority from "./changePriority.js";
 import add from "./add.js";
+import addWithTitle from "./add_with_title.js";
 
 if (!process.env.TODO_FILE) {
 	process.env.TODO_FILE = 'todo'
@@ -37,6 +38,11 @@ const command = (fileName: string) {
 			return 0
 		}
 
+		// open text editor
+		if(args[0] === "add") {
+			add(fileName)
+		}
+
 		// print a single todo
 		// Number() will return NaN if it's not a number
 		const todoNumber = Number(args[0])
@@ -53,7 +59,7 @@ const command = (fileName: string) {
 	if (args.length === 2) {
 		if(args[0] === "add") {
 			// TODO: validate the title of the todo
-			add(fileName, args[1])
+			addWithTitle(fileName, args[1])
 			return 0
 		}
 

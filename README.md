@@ -89,6 +89,8 @@ As an example file, take a look at `build/todo`.
 
 I am thinking of the following commands:
 
+`todo add`
+
 `todo add "buy milk"`
 
 `todo 1 edit`
