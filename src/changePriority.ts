@@ -87,22 +87,32 @@ export default async function changePriority(fileName: string, todo: number, pri
 	if (priority > 1) {
 		// find destinationTodo
 		// loop on array until you are at the destination
-		for(let i=0; i < (todos.length -1); i++) {
+		let i = 0
+		for(; i < (todos.length -1); i++) {
 
 			if(todos[i] === '---') {
 				todoCount ++
 			}
 
-			
 			if(todoCount === priority) {
 				destinationTodo = i+1
+				content.push('---')
 				break
 			}
 		}	
+
+		//destination is last element
+		if(i === (todos.length-1)) {
+			destinationTodo = todos.length - 1
+			content.unshift('---')
+		}
+	}
+	else {
+		// destination is first element
+		content.push('---')
 	}
 
-
-	todos.splice(destinationTodo, 0, ...content, '---');
+	todos.splice(destinationTodo, 0, ...content);
 	
 	// convert array to string with new lines
 	var text = todos.join("\n");

@@ -83,11 +83,11 @@ As an example file, take a look at `build/todo`.
 
 `todo 1 delete` - delete todo number 1
 
+`todo 1 mv 3` - move todo 1 to be number 3 (change priority)
+
 `TODO_FILE=/misc/notes todo` - change the location of your todo file using an environment variable
 
 I am thinking of the following commands:
-
-`todo 5 change-priority 2`
 
 `todo add "buy milk"`
 

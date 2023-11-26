@@ -29,6 +29,7 @@ const command = (fileName: string) {
 			console.log("todo                           print the titles of all your todos")
 			console.log("todo 1                         print todo number 1")
 			console.log("todo 1 delete                  delete todo number 1")
+			console.log("todo 1 mv 3                    move todo 1 to be number 3 (change priority)")
 			console.log("TODO_FILE=/misc/notes todo     use different file name and location")
 			console.log("todo help                      print help")
 
