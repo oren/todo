@@ -20,8 +20,10 @@ todo <command>
 Usage:
 
 todo                            print the titles of all your todos
-todo 1													print todo number 1
+todo add "buy milk"             add todo
+todo 1				            print todo number 1
 todo 1 delete                   delete todo number 1
+todo 1 mv 3                     move todo 1 to be number 3 (change priority)")
 TODO_FILE=/misc/notes todo      use different file name and location
 todo help                       print help
 ```
@@ -77,6 +79,8 @@ As an example file, take a look at `build/todo`.
 ## Commands
 `todo help` - print help
 
+`todo add "buy milk"` - add a todo 
+
 `todo` - print the titles of all todos
 
 `todo 1` - print todo number 1
@@ -90,8 +94,6 @@ As an example file, take a look at `build/todo`.
 I am thinking of the following commands:
 
 `todo add`
-
-`todo add "buy milk"`
 
 `todo 1 edit`
 
@@ -107,7 +109,8 @@ I am thinking of the following commands:
 * [x] delete a single todo
 * [x] file name and path is configurable
 * [x] change priority of a todo
-* [ ] add todo
+* [x] add todo and title
+* [ ] add todo (open text editor)
 * [ ] edit todo
 
 Small improvements:
