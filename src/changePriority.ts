@@ -78,16 +78,34 @@ import deleteOne from "./deleteOne.js";
 // not working. TypeError: (intermediate value) is not iterable
 export default async function changePriority(fileName: string, todo: number, priority: number) {
 	const [numOfLines, content] = await deleteOne(fileName, todo)
+	let destinationTodo = 0
+	let todoCount = 1
 
-	console.log("lines", numOfLines)
-	console.log("content", content)
 
 	var todos = fs.readFileSync(fileName).toString().split("\n");
 
-	console.log("todos", todos)
-	todos.splice(0, 0, ...content, '---');
-	console.log("todos", todos)
+	if (priority > 1) {
+		// find destinationTodo
+		// loop on array until you are at the destination
+		for(let i=0; i < (todos.length -1); i++) {
 
+			if(todos[i] === '---') {
+				todoCount ++
+			}
+
+			
+			if(todoCount === priority) {
+				destinationTodo = i+1
+				break
+			}
+		}	
+	}
+
+
+	todos.splice(destinationTodo, 0, ...content, '---');
+	
+	// convert array to string with new lines
 	var text = todos.join("\n");
+
 	fs.writeFileSync(fileName, text, 'utf8')
 }

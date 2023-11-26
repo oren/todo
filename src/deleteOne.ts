@@ -74,7 +74,11 @@ async function findLinesToDelete(fileName: string, todoNumber: number) {
 		}
 
 		lineNumber += 1
-  }
+	}
+
+	// pad content with spaces
+	if(!(content[0]==='')) {content.unshift('')}
+	if(!(content[content.length-1]==='')) {content.push('')}
 
 	return [lines, content]
 }
