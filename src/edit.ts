@@ -3,15 +3,18 @@ const readline = require('node:readline');
 
 export default async function edit(fileName: string, todo: number): Void {
     // 1. read todo
-    // 2. save to tmp file
-    // 3. open tmp file with a text editor (VIM)
-    // 4. read tmp file and modify todo
+    // 2. open tmp file with a text editor (VIM)
+    // 3. read tmp file and modify todo
 
     // 1. read todo
     const todoContent = await read(fileName, todo)
     console.log('todoContent', todoContent)
 
-    // 2. save to tmp file
+    // 2. open tmp file with a text editor (VIM)
+
+    // 3. read tmp file and modify todo
+	// var todos = fs.readFileSync(fileName).toString().split("\n");
+	// fs.writeFileSync(fileName, text, 'utf8')
 }
 
 // return a single todo
