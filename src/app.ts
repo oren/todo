@@ -33,8 +33,8 @@ const command = (fileName: string) {
 			console.log('todo add "buy milk"            add a todo')
 			console.log("todo add                       add a todo with a text editor")
 			console.log("todo 1                         print todo number 1")
-			console.log("todo 1 delete                  delete todo number 1")
-			console.log("todo 1 edit                    edit todo number 1")
+			console.log("todo 1 delete (or d)           delete todo number 1")
+			console.log("todo 1 edit (or e)             edit todo number 1")
 			console.log("todo 1 mv 3                    move todo 1 to be number 3 (change priority)")
 			console.log("TODO_FILE=/misc/notes todo     use different file name and location")
 			console.log("todo help                      print help")
@@ -68,7 +68,7 @@ const command = (fileName: string) {
 			return 0
 		}
 
-		if(args[1] === "delete") {
+		if(args[1] === "delete" || args[1] === "d") {
 			const todoNumber = Number(args[0])
 			if(!todoNumber) {
 				console.log(`Todo must be a number. You entered '${args[1]}'`)
@@ -80,7 +80,7 @@ const command = (fileName: string) {
 			return 0
 		}
 
-		if(args[1] === "edit") {
+		if(args[1] === "edit" || args[1] === "e") {
 			const todoNumber = Number(args[0])
 			if(!todoNumber) {
 				console.log(`Todo must be a number. You entered '${args[1]}'`)
