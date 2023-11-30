@@ -1,4 +1,4 @@
-# TODO List
+
 A command line application that organizes the stuff I want to do.
 
 https://github.com/oren/todo/assets/6517/04d00a0a-a0af-4f8d-9c7a-510f580b5298
@@ -21,6 +21,7 @@ Usage:
 
 todo                            print the titles of all your todos
 todo add "buy milk"             add todo
+todo add                        add a todo with a text editor
 todo 1				            print todo number 1
 todo 1 delete                   delete todo number 1
 todo 1 mv 3                     move todo 1 to be number 3 (change priority)")

@@ -1,8 +1,8 @@
 const fs = require('node:fs');
 import addWithTitle from "./add_with_title.js";
 
-export default function add(fileName: stringt): Void {
-
+// open text editor and when file is saved, add as first todo
+export default function add(fileName: string): Void {
     const child_process = require('child_process')
 
     fs.rmSync("/tmp/todo.txt", {
