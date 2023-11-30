@@ -22,7 +22,7 @@ Usage:
 todo                            print the titles of all your todos
 todo add "buy milk"             add todo
 todo add                        add a todo with a text editor
-todo 1				                  print todo number 1
+todo 1                          print todo number 1
 todo 1 delete (or d)            delete todo number 1
 todo 1 edit (or e)              edit todo number 1
 todo 1 mv 3                     move todo 1 to be number 3 (change priority)")
