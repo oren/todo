@@ -24,7 +24,7 @@ todo add "buy milk"             add todo
 todo add                        add a todo with a text editor
 todo 1				                  print todo number 1
 todo 1 delete (or d)            delete todo number 1
-todo 1 edit (or e)                     edit todo number 1
+todo 1 edit (or e)              edit todo number 1
 todo 1 mv 3                     move todo 1 to be number 3 (change priority)")
 TODO_FILE=/misc/notes todo      use different file name and location
 todo help                       print help
@@ -89,9 +89,9 @@ As an example file, take a look at `build/todo`.
 
 `todo 1` - print todo number 1
 
-`todo 1 delete` - delete todo number 1
+`todo 1 delete` - delete todo number 1 (also works with d)
 
-`todo 1 edit` - edit todo number 1
+`todo 1 edit` - edit todo number 1 (also works with e)
 
 `todo 1 mv 3` - move todo 1 to be number 3 (change priority)
 
