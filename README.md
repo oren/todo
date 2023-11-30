@@ -22,8 +22,9 @@ Usage:
 todo                            print the titles of all your todos
 todo add "buy milk"             add todo
 todo add                        add a todo with a text editor
-todo 1				            print todo number 1
+todo 1				                  print todo number 1
 todo 1 delete                   delete todo number 1
+todo 1 edit                     edit todo number 1
 todo 1 mv 3                     move todo 1 to be number 3 (change priority)")
 TODO_FILE=/misc/notes todo      use different file name and location
 todo help                       print help
@@ -80,7 +81,7 @@ As an example file, take a look at `build/todo`.
 ## Commands
 `todo help` - print help
 
-`todo add "buy milk"` - add a todo 
+`todo add "buy milk"` - add a todo
 
 `todo add` - add a todo with a text editor
 
@@ -90,13 +91,13 @@ As an example file, take a look at `build/todo`.
 
 `todo 1 delete` - delete todo number 1
 
+`todo 1 edit` - edit todo number 1
+
 `todo 1 mv 3` - move todo 1 to be number 3 (change priority)
 
 `TODO_FILE=/misc/notes todo` - change the location of your todo file using an environment variable
 
 I am thinking of the following commands:
-
-`todo 1 edit`
 
 `todo show-configs` - show the value of TODO_FILE environment variable
 
@@ -112,12 +113,14 @@ I am thinking of the following commands:
 * [x] change priority of a todo
 * [x] add todo and title
 * [x] add todo (open text editor)
-* [ ] edit todo
+* [x] edit todo
 
 Small improvements:
 * update demo video
 * use constant instead of '---'
 * use correct exit codes
+* find out how to compile the file without the watcher
+* use explicit return values
 
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js

@@ -34,6 +34,7 @@ const command = (fileName: string) {
 			console.log("todo add                       add a todo with a text editor")
 			console.log("todo 1                         print todo number 1")
 			console.log("todo 1 delete                  delete todo number 1")
+			console.log("todo 1 edit                    edit todo number 1")
 			console.log("todo 1 mv 3                    move todo 1 to be number 3 (change priority)")
 			console.log("TODO_FILE=/misc/notes todo     use different file name and location")
 			console.log("todo help                      print help")

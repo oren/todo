@@ -97,7 +97,7 @@ export default async function changePriority(fileName: string, todo: number, pri
 				content.push('---')
 				break
 			}
-		}	
+		}
 
 		//destination is last element
 		if(i === (todos.length-1)) {
@@ -111,7 +111,7 @@ export default async function changePriority(fileName: string, todo: number, pri
 	}
 
 	todos.splice(destinationTodo, 0, ...content);
-	
+
 	// convert array to string with new lines
 	var text = todos.join("\n");
 
