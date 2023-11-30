@@ -27,6 +27,7 @@ export default function add(fileName: string): Void {
         var text = todo.join("\n");
 
         addWithTitle(fileName, text)
+				console.log(`Task was added`)
     });
 
 }

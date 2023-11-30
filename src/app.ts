@@ -65,6 +65,7 @@ const command = (fileName: string) {
 		if(args[0] === "add") {
 			// TODO: validate the title of the todo
 			addWithTitle(fileName, args[1])
+			console.log(`Task was added`)
 			return 0
 		}
 

@@ -116,4 +116,6 @@ export default async function changePriority(fileName: string, todo: number, pri
 	var text = todos.join("\n");
 
 	fs.writeFileSync(fileName, text, 'utf8')
+
+	console.log(`Task ${todo} in now number ${priority}`)
 }
