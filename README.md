@@ -4,7 +4,7 @@ A command line application that organizes the stuff I want to do.
 https://github.com/oren/todo/assets/6517/04d00a0a-a0af-4f8d-9c7a-510f580b5298
 
 ## Why I am building this?
-I currently use a giant text file to organize the stuff I want to do. My items are separated by `---`. Very often I have a title and below it a few lines that gives me more context or addition thinsg I need to do as part of this todo.
+I currently use a giant text file to organize the stuff I want to do. My items are separated by `---`. Very often I have a title and below it a few lines that gives me more context or addition things I need to do as part of this todo.
 As soon as I have more than 5 todos, I find it hard to manage it. For example, I want to see only the titles, I want to move a todo to the top, or delete one quickly, I also want to search for keywords and for titles.
 I realized I need to build somthing that will allow me to continue and using a text file with additional productivity boost using a command line utility.
 
