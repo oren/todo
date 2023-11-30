@@ -122,6 +122,9 @@ Small improvements:
 * find out how to compile the file without the watcher
 * use explicit return values
 
+Bigger improvements
+* add the concept of a project
+
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
 * The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
