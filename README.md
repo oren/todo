@@ -124,6 +124,7 @@ Small improvements:
 
 Bigger improvements
 * add the concept of a project
+* add reminder capability
 
 ## Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
