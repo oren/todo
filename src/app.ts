@@ -52,7 +52,7 @@ const command = (fileName: string) {
 		// Number() will return NaN if it's not a number
 		const todoNumber = Number(args[0])
 		if(!todoNumber) {
-			console.log(`Todo must be a number. You entered '${args[0]}'`)
+			console.log(`Task must be a number. You entered '${args[0]}'`)
 			process.exit(1)
 		}
 
@@ -72,7 +72,7 @@ const command = (fileName: string) {
 		if(args[1] === "delete" || args[1] === "d") {
 			const todoNumber = Number(args[0])
 			if(!todoNumber) {
-				console.log(`Todo must be a number. You entered '${args[1]}'`)
+				console.log(`Task must be a number. You entered '${args[1]}'`)
 				process.exit(1)
 			}
 
@@ -84,7 +84,7 @@ const command = (fileName: string) {
 		if(args[1] === "edit" || args[1] === "e") {
 			const todoNumber = Number(args[0])
 			if(!todoNumber) {
-				console.log(`Todo must be a number. You entered '${args[1]}'`)
+				console.log(`Task must be a number. You entered '${args[1]}'`)
 				process.exit(1)
 			}
 
