@@ -112,6 +112,7 @@ const command = (fileName: string) {
 			}
 
 			changePriority(fileName, todo, priority)
+			console.log(`Task ${todo} in now priority ${priority}`)
 			return 0
 		}
 
