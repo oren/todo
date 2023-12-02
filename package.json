@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/oren/todo#readme",
   "dependencies": {
-    "mustache": "^4.2.0",
-    "showdown": "^2.1.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
