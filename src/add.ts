@@ -5,20 +5,20 @@ import addWithTitle from "./add_with_title.js";
 export default function add(fileName: string): Void {
     const child_process = require('child_process')
 
-    fs.rmSync("/tmp/todo.txt", {
+    fs.rmSync("/tmp/todo.md", {
         force: true,
     });
 
     var editor = process.env.EDITOR || 'vi';
 
-    var child = child_process.spawn(editor, ['/tmp/todo.txt'], {
+    var child = child_process.spawn(editor, ['/tmp/todo.md'], {
         stdio: 'inherit'
     });
 
     child.on('exit', function (e, code) {
         // file was saves. add content to todos
 
-        var todo = fs.readFileSync("/tmp/todo.txt").toString().split("\n");
+        var todo = fs.readFileSync("/tmp/todo.md").toString().split("\n");
 
         if(todo[todo.length-1] === '') {
             todo.pop()

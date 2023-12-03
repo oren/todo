@@ -24,12 +24,13 @@ const command = (fileName: string) {
 		return 0
 	}
 
-	// print help or print a single todo
+	// print help or print a single todo or interactive mode
 	if (args.length === 1) {
 		if(args[0] === "help") {
 			console.log("todo <command>\n")
 			console.log("Usage:\n")
 			console.log("todo                           print the titles of all your todos")
+			console.log("todo -i                        print the titles of all your todos, interactive mode")
 			console.log('todo add "buy milk"            add a todo')
 			console.log("todo add                       add a todo with a text editor")
 			console.log("todo 1                         print todo number 1")
@@ -45,6 +46,11 @@ const command = (fileName: string) {
 		// open text editor
 		if(args[0] === "add") {
 			add(fileName)
+			return 0
+		}
+
+		if(args[0] === "-i") {
+			printAll(fileName, true);
 			return 0
 		}
 

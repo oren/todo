@@ -114,6 +114,7 @@ I am thinking of the following commands:
 * [x] add todo and title
 * [x] add todo (open text editor)
 * [x] edit todo
+* [x] interactive mode
 
 Small improvements:
 * update demo video
