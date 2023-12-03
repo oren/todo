@@ -59,7 +59,6 @@ export default async function printAll(fileName: string, interactive: boolean) {
 		loop: false,
 	});
 
-	console.log('answer', answer)
 	printOne(fileName, answer)
 }
 
