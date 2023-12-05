@@ -1,6 +1,9 @@
 const fs = require('node:fs');
 const readline = require('node:readline');
-import select, { Separator } from '@inquirer/select';
+// import select, { Separator } from '@inquirer/select';
+import select, { Separator } from './select';
+import edit from "./edit.js";
+import deleteOne from "./deleteOne.js";
 import printOne from "./printOne.js";
 
 // if todo file exist, show the  titles of all the todos
@@ -39,6 +42,8 @@ export default async function printAll(fileName: string, interactive: boolean) {
 		}
 
 		if(line !== "" && okToPrint) {
+			okToPrint = false
+
 			if(interactive) {
 				displayLine = `Task ${index} ${line}`
 				todos.push({name: displayLine, value: index, description: 'none'})
@@ -46,20 +51,46 @@ export default async function printAll(fileName: string, interactive: boolean) {
 			else {
 				console.log(`Todo ${index}: ${line}`);
 			}
-			okToPrint = false
 		}
   }
 
+	// todo -i. Show interactive list
 	if(!interactive) return
 
-	const answer = await select({
-		message: 'Select a task',
+	// get the number of vertical lines in the terminal.
+	// It's not working. From some reason I get 24 everytime.
+
+	// const execSync = require('child_process').execSync;
+	// const lines = Number(execSync('tput lines').toString());
+	// console.log('lines', lines)
+
+	// there are 3 options for result: 12 or e12, or d12 (12 is the todo number)
+	const result  = await select({
+		message: 'Enter:show e:edit d:delete q:quit',
 		choices: todos,
 		pageSize: 20,
 		loop: false,
 	});
 
-	printOne(fileName, answer)
+	// delete or edit
+	if (isNaN(result) {
+		const action = result[0]
+		const todoNumber = Number(result.slice(1))
+		if (action === 'e') {
+			edit(fileName, todoNumber)
+			console.log(`Task ${todoNumber} was edited`)
+			return
+		} else if (action === 'd') {
+			await deleteOne(fileName, todoNumber)
+			console.log(`Task ${todoNumber} was deleted`)
+			return
+		} else if (action === 'q') {
+			return
+		}
+		return
+	}
+
+	printOne(fileName, Number(result))
 }
 
 
