@@ -92,5 +92,3 @@ export default async function printAll(fileName: string, interactive: boolean) {
 
 	printOne(fileName, Number(result))
 }
-
-
