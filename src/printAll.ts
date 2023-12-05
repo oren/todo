@@ -1,10 +1,10 @@
 const fs = require('node:fs');
 const readline = require('node:readline');
-// import select, { Separator } from '@inquirer/select';
 import select, { Separator } from './select';
 import edit from "./edit.js";
 import deleteOne from "./deleteOne.js";
 import printOne from "./printOne.js";
+import chalk from 'chalk';
 
 // if todo file exist, show the  titles of all the todos
 export default async function printAll(fileName: string, interactive: boolean) {
@@ -45,11 +45,11 @@ export default async function printAll(fileName: string, interactive: boolean) {
 			okToPrint = false
 
 			if(interactive) {
-				displayLine = `Task ${index} ${line}`
+				displayLine = `${index} ${line}`
 				todos.push({name: displayLine, value: index, description: 'none'})
 			}
 			else {
-				console.log(`Todo ${index}: ${line}`);
+				console.log(`${index} ${line}`);
 			}
 		}
   }
