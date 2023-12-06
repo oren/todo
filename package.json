@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/oren/todo#readme",
   "dependencies": {
-    "@inquirer/core": "^5.1.1"
+    "@inquirer/core": "^5.1.1",
+    "blessed": "^0.1.81"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
