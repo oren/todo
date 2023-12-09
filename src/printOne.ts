@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const readline = require('node:readline');
 
 // return a single todo
-export default async function printOne(fileName: string, todoNumber: number, exit: boolean) {
+export default async function printOne(fileName: string, todoNumber: number) {
 	const exists = fs.existsSync(fileName)
 
 	if (!exists) {
@@ -36,6 +36,4 @@ export default async function printOne(fileName: string, todoNumber: number, exi
 			index += 1
 		}
   }
-
-	if (exit) process.exit(0)
 }
