@@ -1,16 +1,16 @@
-
+# todo
 A command line application that organizes the stuff I want to do.
 
 https://github.com/oren/todo/assets/6517/04d00a0a-a0af-4f8d-9c7a-510f580b5298
 
-## Why I am building this?
+## 1. Why I am building this?
 I currently use a giant text file to organize the stuff I want to do. My items are separated by `---`. Very often I have a title and below it a few lines that gives me more context or addition things I need to do as part of this todo.
 As soon as I have more than 5 todos, I find it hard to manage it. For example, I want to see only the titles, I want to move a todo to the top, or delete one quickly, I also want to search for keywords and for titles.
 I realized I need to build somthing that will allow me to continue and using a text file with additional productivity boost using a command line utility.
 
 I choose TypeScript as the programing language but I might build a similar app in Rust or Go in the future.
 
-## How does it looks like?
+## 2. How does it looks like?
 
 Here is a typical workflow:
 ```
@@ -60,14 +60,17 @@ Todo 3: add recipes
 Todo 4: Read: Lessons from getting acquired by Google
 ```
 
-## Setup
+## 3. Using the application
+This section is for those who just want to use it without changing anything.
+
+### Setup
 ```
 npm install -g typescript #TODO: verify if that's a good approach
 npm install
 npm start
 ```
 
-## How to use it?
+### How to use it?
 After you run `npm start`, app.js will be created in the build folder.
 You can run the application with `./app.js` or `node app.js`.
 You can also run anywhere on your laptop with the command `todo` after you run `npm link`.
@@ -78,7 +81,7 @@ Everything after that and until the next delimiter is the body of the todo item.
 
 As an example file, take a look at `build/todo`.
 
-## Commands
+### Commands
 `todo help` - print help
 
 `todo add "buy milk"` - add a todo
@@ -101,9 +104,10 @@ I am thinking of the following commands:
 
 `todo show-configs` - show the value of TODO_FILE environment variable
 
-## Notes for development
+## 4. Changing the application
+This section is for those who want to change something in the application.
 
-## Backlog
+### Backlog
 
 * [x] print all todos
 * [x] print a single todo
@@ -127,23 +131,23 @@ Bigger improvements
 * add the concept of a project
 * add reminder capability
 
-## Development flow
+### Development flow
 * When I change app.ts, the typescript compiler generate build/app.js
 * The command `npm link` allow me to run the program as a script from any location on my laptop with the command `todo`. The location of the js file is /home/oren/.nvm/versions/node/v18.18.0/bin/todo
 * The template.html file is located in the 'build' folder
 
-### Run as linux script
+#### Run as linux script
 In order to run this program as a linux script, in ./app.js I added the first line: #!/usr/bin/env node.
 
-### Nicer name for the script
+#### Nicer name for the script
 * In order to call the script with `todo` instead of ./app.js I have an entry in package.json called bin.
 This only worked after I also run the command `npm link` which allow me to call my program anywhere on my laptop.
 * In order to unlink, run `npm unlink todo`.
 
-### Automatic build on file change
+#### Automatic build on file change
 I use nodemon and concurrently locally. They can also installed with globally (with -g).
 
-### Other ways to run ts files
+#### Other ways to run ts files
 * `npx ts-node ~/scripts/site-generator.ts`. npx is a shortcut for npm exec, which runs scripts from packages, and ts-node is a wrapper for node that compiles and runs ts as a single step; it's essentially tsc and node in a single command
 
 ### References
