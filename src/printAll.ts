@@ -68,7 +68,7 @@ export default async function printAll(fileName: string, interactive: boolean) {
 	const result  = await select({
 		message: 'Enter:show e:edit d:delete q:quit',
 		choices: todos,
-		pageSize: 20,
+		pageSize: 35,
 		loop: false,
 	});
 
