@@ -9,7 +9,7 @@ import addWithTitle from "./add_with_title.js";
 import edit from "./edit.js";
 
 if (!process.env.TODO_FILE) {
-	process.env.TODO_FILE = 'todo'
+	process.env.TODO_FILE = 'todo.md'
 }
 
 const fs = require('node:fs');
