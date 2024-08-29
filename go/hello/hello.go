@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
 
-import "rsc.io/quote"
+    "github.com/oren/todo"
+)
 
 func main() {
-    fmt.Println(quote.Go())
+    // Get a greeting message and print it.
+    message := todo.Add("buy milk")
+    fmt.Println(message)
 }
