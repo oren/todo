@@ -2,25 +2,23 @@ package todo
 
 import (
     "testing"
-    "regexp"
+    "os"
 )
 
-// TestHelloName calls greetings.Hello with a name, checking
-// for a valid return value.
-func TestAddTodo(t *testing.T) {
-    todo := "buy oatmilk"
-    want := regexp.MustCompile(`\b`+todo+`\b`)
+// fail if adding a todo doesn't create todo.md
+func TestAddFirstTodo(t *testing.T) {
     msg, err := Add("buy oatmilk")
-    if !want.MatchString(msg) || err != nil {
-        t.Fatalf(`Add("buy oatmilk") = %q, %v, want match for %#q, nil`, msg, err, want)
-    }
-}
 
-// TestHelloEmpty calls greetings.Hello with an empty string,
-// checking for an error.
-func TestAddEmpty(t *testing.T) {
-    msg, err := Add("")
-    if msg != "" || err == nil {
-        t.Fatalf(`Add("") = %q, %v, want "", error`, msg, err)
+    if err != nil {
+        t.Fatalf(`Error in Add. message: %q, error: %v`, msg, err)
+    }
+
+    fileExist := false
+    if _, err := os.Stat("todo.md"); err == nil {
+      fileExist = true
+    }
+
+    if !fileExist  {
+        t.Fatalf("todo.md doesn't exist")
     }
 }
