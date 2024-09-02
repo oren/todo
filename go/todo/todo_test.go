@@ -3,6 +3,7 @@ package todo
 import (
     "testing"
     "os"
+    "fmt"
 )
 
 // fail if adding a todo doesn't create todo.md
@@ -21,4 +22,18 @@ func TestAddFirstTodo(t *testing.T) {
     if !fileExist  {
         t.Fatalf("todo.md doesn't exist")
     }
+
+    dat, err := os.ReadFile("todo.md")
+    if err != nil {
+        t.Fatalf("error reading file")
+    }
+
+    want := "buy milk"
+    actual := string(dat)
+
+    if actual != want  {
+        t.Fatalf("todo.md has '%s', instead of '%s'.", actual, want)
+    }
+
+    fmt.Print(string(dat))
 }
