@@ -12,3 +12,9 @@ running `go run .` inside hello folder will use the todo module.
 
 ## Features
 * `todo tags` display list of tags. A tag is defined with @tag-name right after the title of the todo. If no tag is defined it will be under the @misc tag.
+
+## Run tests
+```
+cd go/todo
+go test
+```
