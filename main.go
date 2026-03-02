@@ -88,24 +88,25 @@ func saveConfig() {
 }
 
 func addTodo(todo string) {
-	f, err := os.OpenFile(todoFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	todos, err := readTodos()
 	if err != nil {
-		fmt.Println("Error opening todo file:", err)
+		fmt.Println("Error reading todo file:", err)
 		return
 	}
-	defer f.Close()
 
 	parts := strings.Fields(todo)
-	var contentToWrite string
+	var newTodo string
 	if len(parts) > 0 && strings.HasPrefix(parts[len(parts)-1], "@") {
 		tag := parts[len(parts)-1]
 		mainTodo := strings.Join(parts[:len(parts)-1], " ")
-		contentToWrite = mainTodo + "\n" + tag + "\n---\n"
+		newTodo = mainTodo + "\n" + tag
 	} else {
-		contentToWrite = todo + "\n---\n"
+		newTodo = todo
 	}
 
-	if _, err := f.WriteString(contentToWrite); err != nil {
+	todos = append(todos, newTodo)
+
+	if err := writeTodos(todos); err != nil {
 		fmt.Println("Error writing to todo file:", err)
 	}
 }
@@ -282,7 +283,7 @@ func writeTodos(todos []string) error {
 	var builder strings.Builder
 	for _, todo := range todos {
 		builder.WriteString(todo)
-		builder.WriteString("\n---\n")
+		builder.WriteString("\n\n---\n\n")
 	}
 
 	return os.WriteFile(todoFile, []byte(builder.String()), 0644)
