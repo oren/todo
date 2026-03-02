@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
 
-const todoFile = "todo.md"
-const configFile = "config.json"
+var todoDir = filepath.Join(os.Getenv("HOME"), ".config", "todo")
+var todoFile = filepath.Join(todoDir, "todo")
+var configFile = filepath.Join(todoDir, "config.json")
 
 type Config struct {
 	DisplayTags bool `json:"display_tags"`
@@ -19,6 +21,7 @@ type Config struct {
 var appConfig Config
 
 func main() {
+	os.MkdirAll(todoDir, 0755)
 	loadConfig()
 
 	if len(os.Args) < 2 {
@@ -29,34 +32,23 @@ func main() {
 	switch os.Args[1] {
 	case "a":
 		addTodoFromEditor()
-	case "d":
-		if len(os.Args) < 3 {
-			fmt.Println("Usage: todo d <item number>")
-			return
-		}
-		itemNumber, err := strconv.Atoi(os.Args[2])
-		if err != nil {
-			fmt.Println("Invalid item number:", os.Args[2])
-			return
-		}
-		deleteTodo(itemNumber)
-	case "e":
-		if len(os.Args) < 3 {
-			fmt.Println("Usage: todo e <item number>")
-			return
-		}
-		itemNumber, err := strconv.Atoi(os.Args[2])
-		if err != nil {
-			fmt.Println("Invalid item number:", os.Args[2])
-			return
-		}
-		editTodo(itemNumber)
 	case "help":
 		showHelp()
 	default:
-		// Check if the argument is a number (view specific todo)
+		// Check if the argument is a number (view, delete, or edit)
 		if itemNumber, err := strconv.Atoi(os.Args[1]); err == nil {
-			viewTodo(itemNumber)
+			if len(os.Args) == 2 {
+				viewTodo(itemNumber)
+			} else {
+				switch os.Args[2] {
+				case "d":
+					deleteTodo(itemNumber)
+				case "e":
+					editTodo(itemNumber)
+				default:
+					fmt.Println("Unknown action:", os.Args[2])
+				}
+			}
 		} else if strings.HasPrefix(os.Args[1], "@") {
 			listTodos(os.Args[1])
 		} else {
@@ -305,7 +297,7 @@ func showHelp() {
 	fmt.Println("  <@tag>          List todos with a specific tag (e.g., todo @groceries).")
 	fmt.Println("  a               Open nvim to add a new multi-line todo.")
 	fmt.Println("  <number>        View a specific todo item (e.g., todo 1).")
-	fmt.Println("  d <number>      Delete a todo item by its number (e.g., todo d 2).")
-	fmt.Println("  e <number>      Edit a todo item by its number in nvim (e.g., todo e 1).")
+	fmt.Println("  <number> d      Delete a todo item by its number (e.g., todo 2 d).")
+	fmt.Println("  <number> e      Edit a todo item by its number in nvim (e.g., todo 1 e).")
 	fmt.Println("  help            Show this help message.")
 }
