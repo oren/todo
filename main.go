@@ -54,8 +54,10 @@ func main() {
 	case "help":
 		showHelp()
 	default:
-		// Check if the argument is a tag
-		if strings.HasPrefix(os.Args[1], "@") {
+		// Check if the argument is a number (view specific todo)
+		if itemNumber, err := strconv.Atoi(os.Args[1]); err == nil {
+			viewTodo(itemNumber)
+		} else if strings.HasPrefix(os.Args[1], "@") {
 			listTodos(os.Args[1])
 		} else {
 			addTodo(strings.Join(os.Args[1:], " "))
@@ -229,6 +231,21 @@ func listTodos(filterTag string) {
 	}
 }
 
+func viewTodo(itemNumber int) {
+	todos, err := readTodos()
+	if err != nil {
+		fmt.Println("Error reading todos:", err)
+		return
+	}
+
+	if itemNumber < 1 || itemNumber > len(todos) {
+		fmt.Println("Invalid item number:", itemNumber)
+		return
+	}
+
+	fmt.Println(todos[itemNumber-1])
+}
+
 func deleteTodo(itemNumber int) {
 	todos, err := readTodos()
 	if err != nil {
@@ -287,6 +304,7 @@ func showHelp() {
 	fmt.Println("  <todo text>     Add a new todo item (e.g., todo buy milk). If the last word is a tag (starts with @), it will be added on a new line.")
 	fmt.Println("  <@tag>          List todos with a specific tag (e.g., todo @groceries).")
 	fmt.Println("  a               Open nvim to add a new multi-line todo.")
+	fmt.Println("  <number>        View a specific todo item (e.g., todo 1).")
 	fmt.Println("  d <number>      Delete a todo item by its number (e.g., todo d 2).")
 	fmt.Println("  e <number>      Edit a todo item by its number in nvim (e.g., todo e 1).")
 	fmt.Println("  help            Show this help message.")
