@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -13,6 +15,7 @@ import (
 var todoDir = filepath.Join(os.Getenv("HOME"), ".config", "todo")
 var todoFile = filepath.Join(todoDir, "todo")
 var configFile = filepath.Join(todoDir, "config.json")
+var lastViewedFile = filepath.Join(todoDir, "last_viewed")
 
 type Config struct {
 	DisplayTags bool `json:"display_tags"`
@@ -32,6 +35,10 @@ func main() {
 	switch os.Args[1] {
 	case "a":
 		addTodoFromEditor()
+	case "d":
+		deleteLastViewed()
+	case "o":
+		openTodoFile()
 	case "help":
 		showHelp()
 	default:
@@ -237,6 +244,7 @@ func viewTodo(itemNumber int) {
 	}
 
 	fmt.Println(todos[itemNumber-1])
+	saveLastViewed(itemNumber)
 }
 
 func deleteTodo(itemNumber int) {
@@ -289,6 +297,51 @@ func writeTodos(todos []string) error {
 	return os.WriteFile(todoFile, []byte(builder.String()), 0644)
 }
 
+func todoFileHash() string {
+	data, err := os.ReadFile(todoFile)
+	if err != nil {
+		return ""
+	}
+	h := sha256.Sum256(data)
+	return hex.EncodeToString(h[:])
+}
+
+func saveLastViewed(itemNumber int) {
+	content := strconv.Itoa(itemNumber) + "\n" + todoFileHash()
+	os.WriteFile(lastViewedFile, []byte(content), 0644)
+}
+
+func deleteLastViewed() {
+	data, err := os.ReadFile(lastViewedFile)
+	if err != nil {
+		return
+	}
+	parts := strings.SplitN(strings.TrimSpace(string(data)), "\n", 2)
+	if len(parts) != 2 {
+		return
+	}
+	if parts[1] != todoFileHash() {
+		return
+	}
+	itemNumber, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return
+	}
+	deleteTodo(itemNumber)
+	os.Remove(lastViewedFile)
+}
+
+func openTodoFile() {
+	cmd := exec.Command("nvim", todoFile)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		fmt.Println("Error opening todo file:", err)
+	}
+}
+
 func showHelp() {
 	fmt.Println("Usage: todo [command] [arguments]")
 	fmt.Println("")
@@ -297,6 +350,8 @@ func showHelp() {
 	fmt.Println("  <todo text>     Add a new todo item (e.g., todo buy milk). If the last word is a tag (starts with @), it will be added on a new line.")
 	fmt.Println("  <@tag>          List todos with a specific tag (e.g., todo @groceries).")
 	fmt.Println("  a               Open nvim to add a new multi-line todo.")
+	fmt.Println("  d               Delete the last viewed todo.")
+	fmt.Println("  o               Open the todo file in nvim.")
 	fmt.Println("  <number>        View a specific todo item (e.g., todo 1).")
 	fmt.Println("  <number> d      Delete a todo item by its number (e.g., todo 2 d).")
 	fmt.Println("  <number> e      Edit a todo item by its number in nvim (e.g., todo 1 e).")
