@@ -205,6 +205,27 @@ func listTodos(filterTag string) {
 		fmt.Println("No todos yet!")
 		return	}
 
+	// Count matching todos first so we know how wide to pad the numbers.
+	matching := 0
+	for _, todo := range todos {
+		lines := strings.Split(todo, "\n")
+		tag := ""
+		if len(lines) > 1 && strings.HasPrefix(lines[1], "@") {
+			tag = lines[1]
+		}
+		if filterTag != "" && tag != filterTag {
+			continue
+		}
+		matching++
+	}
+
+	// Pad single-digit numbers with an extra space so the text aligns
+	// vertically when the list reaches double digits.
+	pad := ""
+	if matching >= 10 {
+		pad = " "
+	}
+
 	filteredCount := 0
 	for _, todo := range todos {
 		lines := strings.Split(todo, "\n")
@@ -219,10 +240,14 @@ func listTodos(filterTag string) {
 		}
 
 		filteredCount++
+		numPad := ""
+		if filteredCount < 10 {
+			numPad = pad
+		}
 		if appConfig.DisplayTags && tag != "" {
-			fmt.Printf("%d. %s %s\n", filteredCount, mainTodo, tag)
+			fmt.Printf("%d.%s %s %s\n", filteredCount, numPad, mainTodo, tag)
 		} else {
-			fmt.Printf("%d. %s\n", filteredCount, mainTodo)
+			fmt.Printf("%d.%s %s\n", filteredCount, numPad, mainTodo)
 		}
 	}
 
