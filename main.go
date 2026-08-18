@@ -176,7 +176,8 @@ func editTodo(itemNumber int) {
 
 	if _, err := tempFile.WriteString(todos[itemNumber-1]); err != nil {
 		fmt.Println("Error writing to temporary file:", err)
-		return	}
+		return
+	}
 
 	cmd := exec.Command(editor, tempFile.Name())
 	cmd.Stdin = os.Stdin
