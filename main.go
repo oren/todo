@@ -52,6 +52,8 @@ func main() {
 					deleteTodo(itemNumber)
 				case "e":
 					editTodo(itemNumber)
+				case "t":
+					moveToTop(itemNumber)
 				default:
 					fmt.Println("Unknown action:", os.Args[2])
 				}
@@ -292,6 +294,27 @@ func deleteTodo(itemNumber int) {
 	}
 }
 
+func moveToTop(itemNumber int) {
+	todos, err := readTodos()
+	if err != nil {
+		fmt.Println("Error reading todos:", err)
+		return
+	}
+
+	if itemNumber < 1 || itemNumber > len(todos) {
+		fmt.Println("Invalid item number:", itemNumber)
+		return
+	}
+
+	item := todos[itemNumber-1]
+	todos = append(todos[:itemNumber-1], todos[itemNumber:]...)
+	todos = append([]string{item}, todos...)
+
+	if err := writeTodos(todos); err != nil {
+		fmt.Println("Error writing todos:", err)
+	}
+}
+
 func readTodos() ([]string, error) {
 	data, err := os.ReadFile(todoFile)
 	if err != nil {
@@ -380,5 +403,6 @@ func showHelp() {
 	fmt.Println("  <number>        View a specific todo item (e.g., todo 1).")
 	fmt.Println("  <number> d      Delete a todo item by its number (e.g., todo 2 d).")
 	fmt.Println("  <number> e      Edit a todo item by its number in nvim (e.g., todo 1 e).")
+	fmt.Println("  <number> t      Move a todo item to the top of the list (e.g., todo 4 t).")
 	fmt.Println("  help            Show this help message.")
 }
