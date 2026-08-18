@@ -84,6 +84,12 @@ go build
 
 `todo 1 mv 3` - move todo 1 to be number 3 (change priority)
 
+`todo @groceries` - print the titles of todos with the `@groceries` tag
+
+`todo /chargetech` - print the titles of todos whose title contains `chargetech` (case insensitive)
+
+Filtered lists keep the real item numbers, so `todo 7 d` deletes whatever the filtered list shows as 7.
+
 `TODO_FILE=/misc/notes todo` - change the location of your todo file using an environment variable
 
 I am thinking of the following commands:
@@ -98,6 +104,7 @@ I am thinking of the following commands:
 * [x] edit todo
 * [x] show help
 * [x] delete a single todo
+* [x] search todos by keyword
 * [ ] print a single todo
 * [ ] file name and path is configurable
 * [ ] change priority of a todo

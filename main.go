@@ -28,7 +28,7 @@ func main() {
 	loadConfig()
 
 	if len(os.Args) < 2 {
-		listTodos("") // List all todos if no arguments
+		listTodos("", "") // List all todos if no arguments
 		return
 	}
 
@@ -59,7 +59,12 @@ func main() {
 				}
 			}
 		} else if strings.HasPrefix(os.Args[1], "@") {
-			listTodos(os.Args[1])
+			listTodos(os.Args[1], "")
+		} else if strings.HasPrefix(os.Args[1], "/") {
+			// Everything after the slash is one phrase, so `todo /charge tech`
+			// works without quoting.
+			keyword := strings.Join(os.Args[1:], " ")
+			listTodos("", strings.TrimSpace(strings.TrimPrefix(keyword, "/")))
 		} else {
 			addTodo(strings.Join(os.Args[1:], " "))
 		}
@@ -196,7 +201,32 @@ func editTodo(itemNumber int) {
 	}
 }
 
-func listTodos(filterTag string) {
+// splitTodo returns the first line of a todo and its tag, if the second line
+// holds one.
+func splitTodo(todo string) (mainTodo, tag string) {
+	lines := strings.Split(todo, "\n")
+	mainTodo = lines[0]
+	if len(lines) > 1 && strings.HasPrefix(lines[1], "@") {
+		tag = lines[1]
+	}
+	return mainTodo, tag
+}
+
+// matches reports whether a todo passes the active filters. An empty filterTag
+// or keyword means that filter is off. The keyword is matched case
+// insensitively against the first line only.
+func matches(todo, filterTag, keyword string) bool {
+	mainTodo, tag := splitTodo(todo)
+	if filterTag != "" && tag != filterTag {
+		return false
+	}
+	if keyword != "" && !strings.Contains(strings.ToLower(mainTodo), strings.ToLower(keyword)) {
+		return false
+	}
+	return true
+}
+
+func listTodos(filterTag, keyword string) {
 	todos, err := readTodos()
 	if err != nil {
 		fmt.Println("Error reading todos:", err)
@@ -205,56 +235,44 @@ func listTodos(filterTag string) {
 
 	if len(todos) == 0 {
 		fmt.Println("No todos yet!")
-		return	}
+		return
+	}
 
-	// Count matching todos first so we know how wide to pad the numbers.
-	matching := 0
-	for _, todo := range todos {
-		lines := strings.Split(todo, "\n")
-		tag := ""
-		if len(lines) > 1 && strings.HasPrefix(lines[1], "@") {
-			tag = lines[1]
+	// Find the highest matching item number first so every number can be
+	// right aligned to the same width.
+	maxNumber := 0
+	for i, todo := range todos {
+		if matches(todo, filterTag, keyword) {
+			maxNumber = i + 1
 		}
-		if filterTag != "" && tag != filterTag {
+	}
+
+	if maxNumber == 0 {
+		switch {
+		case filterTag != "" && keyword != "":
+			fmt.Printf("No todos with tag '%s' matching '%s'\n", filterTag, keyword)
+		case filterTag != "":
+			fmt.Printf("No todos found with tag '%s'\n", filterTag)
+		default:
+			fmt.Printf("No todos matching '%s'\n", keyword)
+		}
+		return
+	}
+
+	width := len(strconv.Itoa(maxNumber))
+	for i, todo := range todos {
+		if !matches(todo, filterTag, keyword) {
 			continue
 		}
-		matching++
-	}
 
-	// Pad single-digit numbers with an extra space so the text aligns
-	// vertically when the list reaches double digits.
-	pad := ""
-	if matching >= 10 {
-		pad = " "
-	}
-
-	filteredCount := 0
-	for _, todo := range todos {
-		lines := strings.Split(todo, "\n")
-		mainTodo := lines[0]
-		tag := ""
-		if len(lines) > 1 && strings.HasPrefix(lines[1], "@") {
-			tag = lines[1]
-		}
-
-		if filterTag != "" && tag != filterTag {
-			continue // Skip if filtering by tag and it doesn't match
-		}
-
-		filteredCount++
-		numPad := ""
-		if filteredCount < 10 {
-			numPad = pad
-		}
+		// Numbers are the real item numbers, so `todo 7 d` deletes whatever
+		// a filtered list shows as 7.
+		mainTodo, tag := splitTodo(todo)
 		if appConfig.DisplayTags && tag != "" {
-			fmt.Printf("%d.%s %s %s\n", filteredCount, numPad, mainTodo, tag)
+			fmt.Printf("%*d. %s %s\n", width, i+1, mainTodo, tag)
 		} else {
-			fmt.Printf("%d.%s %s\n", filteredCount, numPad, mainTodo)
+			fmt.Printf("%*d. %s\n", width, i+1, mainTodo)
 		}
-	}
-
-	if filteredCount == 0 && filterTag != "" {
-		fmt.Printf("No todos found with tag '%s'\n", filterTag)
 	}
 }
 
@@ -397,6 +415,7 @@ func showHelp() {
 	fmt.Println("  (no arguments)  List all todos (showing only the first line).")
 	fmt.Println("  <todo text>     Add a new todo item (e.g., todo buy milk). If the last word is a tag (starts with @), it will be added on a new line.")
 	fmt.Println("  <@tag>          List todos with a specific tag (e.g., todo @groceries).")
+	fmt.Println("  /<keyword>      List todos whose first line contains <keyword>, case insensitive (e.g., todo /chargetech).")
 	fmt.Println("  a               Open nvim to add a new multi-line todo.")
 	fmt.Println("  d               Delete the last viewed todo.")
 	fmt.Println("  o               Open the todo file in nvim.")
